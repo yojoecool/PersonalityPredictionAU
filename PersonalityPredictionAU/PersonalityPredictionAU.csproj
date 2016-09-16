@@ -72,6 +72,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -181,14 +183,51 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DictionaryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CategoryScore.cs">
+      <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CategoryType.cs">
+      <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Dictionary.cs">
+      <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PersonalityPredictionDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonalityPredictionDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonalityPredictionDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonalityPredictionDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Source.cs">
+      <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Word.cs">
+      <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -213,7 +252,24 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\PersonalityPredictionDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PersonalityPredictionDBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\PersonalityPredictionDBModel.edmx.diagram">
+      <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
+    <Content Include="Models\PersonalityPredictionDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
+      <LastGenOutput>PersonalityPredictionDBModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\PersonalityPredictionDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
+      <LastGenOutput>PersonalityPredictionDBModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -269,6 +325,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\PostRetrieval.cshtml" />
     <Content Include="Views\Home\UnAuthenticated.cshtml" />
+    <Content Include="Views\Dictionary\Index.cshtml" />
+    <Content Include="Views\Dictionary\Create.cshtml" />
+    <Content Include="Views\Dictionary\Delete.cshtml" />
+    <Content Include="Views\Dictionary\Edit.cshtml" />
+    <Content Include="Views\Dictionary\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Temp\" />
@@ -278,6 +339,9 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

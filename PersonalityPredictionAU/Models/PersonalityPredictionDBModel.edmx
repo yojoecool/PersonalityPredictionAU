@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PersonalityPredictionDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DictionaryId" Type="int" Nullable="false" />
+          <Property Name="CategoryTypeId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryScore' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CategoryScore">
+          <Key>
+            <PropertyRef Name="AccountId" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="SourceId" />
+            <PropertyRef Name="Score" />
+          </Key>
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="SourceId" Type="int" Nullable="false" />
+          <Property Name="Score" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CategoryType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryWord' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CategoryWord">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="WordId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="WordId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dictionary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Word">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Category_CategoryType">
+          <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="CategoryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Dictionary">
+          <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dictionary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="DictionaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryScore_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="CategoryScore" Type="Self.CategoryScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryScore">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryScore_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="CategoryScore" Type="Self.CategoryScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryScore">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryScore_Source">
+          <End Role="Source" Type="Self.Source" Multiplicity="1" />
+          <End Role="CategoryScore" Type="Self.CategoryScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryScore">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryWord_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="CategoryWord" Type="Self.CategoryWord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryWord">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryWord_Word">
+          <End Role="Word" Type="Self.Word" Multiplicity="1" />
+          <End Role="CategoryWord" Type="Self.CategoryWord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryWord">
+              <PropertyRef Name="WordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PersonalityPredictionDBModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryType" EntityType="Self.CategoryType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dictionary" EntityType="Self.Dictionary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Word" EntityType="Self.Word" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryScore" EntityType="Self.CategoryScore" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CategoryScore].[AccountId] AS [AccountId], 
+    [CategoryScore].[CategoryId] AS [CategoryId], 
+    [CategoryScore].[SourceId] AS [SourceId], 
+    [CategoryScore].[Score] AS [Score]
+    FROM [dbo].[CategoryScore] AS [CategoryScore]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="CategoryWord" EntityType="Self.CategoryWord" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CategoryWord].[CategoryId] AS [CategoryId], 
+    [CategoryWord].[WordId] AS [WordId]
+    FROM [dbo].[CategoryWord] AS [CategoryWord]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Category_CategoryType" Association="Self.FK_Category_CategoryType">
+            <End Role="CategoryType" EntitySet="CategoryType" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Dictionary" Association="Self.FK_Category_Dictionary">
+            <End Role="Dictionary" EntitySet="Dictionary" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryScore_Account" Association="Self.FK_CategoryScore_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="CategoryScore" EntitySet="CategoryScore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryScore_Category" Association="Self.FK_CategoryScore_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="CategoryScore" EntitySet="CategoryScore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryScore_Source" Association="Self.FK_CategoryScore_Source">
+            <End Role="Source" EntitySet="Source" />
+            <End Role="CategoryScore" EntitySet="CategoryScore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryWord_Category" Association="Self.FK_CategoryWord_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="CategoryWord" EntitySet="CategoryWord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryWord_Word" Association="Self.FK_CategoryWord_Word">
+            <End Role="Word" EntitySet="Word" />
+            <End Role="CategoryWord" EntitySet="CategoryWord" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PersonalityPredictionDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CategoryScores" Relationship="Self.FK_CategoryScore_Account" FromRole="Account" ToRole="CategoryScore" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DictionaryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CategoryType" Relationship="Self.FK_Category_CategoryType" FromRole="Category" ToRole="CategoryType" />
+          <NavigationProperty Name="Dictionary" Relationship="Self.FK_Category_Dictionary" FromRole="Category" ToRole="Dictionary" />
+          <NavigationProperty Name="CategoryScores" Relationship="Self.FK_CategoryScore_Category" FromRole="Category" ToRole="CategoryScore" />
+          <NavigationProperty Name="Words" Relationship="Self.CategoryWord" FromRole="Category" ToRole="Word" />
+        </EntityType>
+        <EntityType Name="CategoryType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Category_CategoryType" FromRole="CategoryType" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Dictionary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Category_Dictionary" FromRole="Dictionary" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CategoryScores" Relationship="Self.FK_CategoryScore_Source" FromRole="Source" ToRole="CategoryScore" />
+        </EntityType>
+        <EntityType Name="Word">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="Self.CategoryWord" FromRole="Word" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="CategoryScore">
+          <Key>
+            <PropertyRef Name="AccountId" />
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="SourceId" />
+            <PropertyRef Name="Score" />
+          </Key>
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SourceId" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_CategoryScore_Account" FromRole="CategoryScore" ToRole="Account" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_CategoryScore_Category" FromRole="CategoryScore" ToRole="Category" />
+          <NavigationProperty Name="Source" Relationship="Self.FK_CategoryScore_Source" FromRole="CategoryScore" ToRole="Source" />
+        </EntityType>
+        <Association Name="FK_CategoryScore_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="CategoryScore" Type="Self.CategoryScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryScore">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_CategoryType">
+          <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoryType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="CategoryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Category_Dictionary">
+          <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dictionary">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="DictionaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryScore_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="CategoryScore" Type="Self.CategoryScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryScore">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryScore_Source">
+          <End Role="Source" Type="Self.Source" Multiplicity="1" />
+          <End Role="CategoryScore" Type="Self.CategoryScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryScore">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoryWord">
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <End Role="Word" Type="Self.Word" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="PersonalityPredictionDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="CategoryTypes" EntityType="Self.CategoryType" />
+          <EntitySet Name="Dictionaries" EntityType="Self.Dictionary" />
+          <EntitySet Name="Sources" EntityType="Self.Source" />
+          <EntitySet Name="Words" EntityType="Self.Word" />
+          <EntitySet Name="CategoryScores" EntityType="Self.CategoryScore" />
+          <AssociationSet Name="FK_CategoryScore_Account" Association="Self.FK_CategoryScore_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="CategoryScore" EntitySet="CategoryScores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_CategoryType" Association="Self.FK_Category_CategoryType">
+            <End Role="CategoryType" EntitySet="CategoryTypes" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Category_Dictionary" Association="Self.FK_Category_Dictionary">
+            <End Role="Dictionary" EntitySet="Dictionaries" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryScore_Category" Association="Self.FK_CategoryScore_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="CategoryScore" EntitySet="CategoryScores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryScore_Source" Association="Self.FK_CategoryScore_Source">
+            <End Role="Source" EntitySet="Sources" />
+            <End Role="CategoryScore" EntitySet="CategoryScores" />
+          </AssociationSet>
+          <AssociationSet Name="CategoryWord" Association="Self.CategoryWord">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Word" EntitySet="Words" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PersonalityPredictionDBModelStoreContainer" CdmEntityContainer="PersonalityPredictionDBEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="PersonalityPredictionDBModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="PersonalityPredictionDBModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DictionaryId" ColumnName="DictionaryId" />
+                <ScalarProperty Name="CategoryTypeId" ColumnName="CategoryTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryTypes">
+            <EntityTypeMapping TypeName="PersonalityPredictionDBModel.CategoryType">
+              <MappingFragment StoreEntitySet="CategoryType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dictionaries">
+            <EntityTypeMapping TypeName="PersonalityPredictionDBModel.Dictionary">
+              <MappingFragment StoreEntitySet="Dictionary">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sources">
+            <EntityTypeMapping TypeName="PersonalityPredictionDBModel.Source">
+              <MappingFragment StoreEntitySet="Source">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Words">
+            <EntityTypeMapping TypeName="PersonalityPredictionDBModel.Word">
+              <MappingFragment StoreEntitySet="Word">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryScores">
+            <EntityTypeMapping TypeName="PersonalityPredictionDBModel.CategoryScore">
+              <MappingFragment StoreEntitySet="CategoryScore">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CategoryWord" TypeName="PersonalityPredictionDBModel.CategoryWord" StoreEntitySet="CategoryWord">
+            <EndProperty Name="Category">
+              <ScalarProperty Name="Id" ColumnName="CategoryId" />
+            </EndProperty>
+            <EndProperty Name="Word">
+              <ScalarProperty Name="Id" ColumnName="WordId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
