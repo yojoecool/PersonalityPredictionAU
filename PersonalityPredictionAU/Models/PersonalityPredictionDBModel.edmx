@@ -4,13 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PersonalityPredictionDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PersonalityPredictionDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -208,19 +209,10 @@ warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryWord' does not
             <End Role="CategoryWord" EntitySet="CategoryWord" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PersonalityPredictionDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="CategoryScores" Relationship="Self.FK_CategoryScore_Account" FromRole="Account" ToRole="CategoryScore" />
-        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />
@@ -278,22 +270,10 @@ warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryWord' does not
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <Property Name="SourceId" Type="Int32" Nullable="false" />
           <Property Name="Score" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_CategoryScore_Account" FromRole="CategoryScore" ToRole="Account" />
           <NavigationProperty Name="Category" Relationship="Self.FK_CategoryScore_Category" FromRole="CategoryScore" ToRole="Category" />
           <NavigationProperty Name="Source" Relationship="Self.FK_CategoryScore_Source" FromRole="CategoryScore" ToRole="Source" />
+          <NavigationProperty Name="Account" Relationship="PersonalityPredictionDBModel.FK_CategoryScore_Account" FromRole="CategoryScore" ToRole="Account" />
         </EntityType>
-        <Association Name="FK_CategoryScore_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="CategoryScore" Type="Self.CategoryScore" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CategoryScore">
-              <PropertyRef Name="AccountId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Category_CategoryType">
           <End Role="CategoryType" Type="Self.CategoryType" Multiplicity="1" />
           <End Role="Category" Type="Self.Category" Multiplicity="*" />
@@ -347,17 +327,12 @@ warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryWord' does not
           <End Role="Word" Type="Self.Word" Multiplicity="*" />
         </Association>
         <EntityContainer Name="PersonalityPredictionDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="CategoryTypes" EntityType="Self.CategoryType" />
           <EntitySet Name="Dictionaries" EntityType="Self.Dictionary" />
           <EntitySet Name="Sources" EntityType="Self.Source" />
           <EntitySet Name="Words" EntityType="Self.Word" />
           <EntitySet Name="CategoryScores" EntityType="Self.CategoryScore" />
-          <AssociationSet Name="FK_CategoryScore_Account" Association="Self.FK_CategoryScore_Account">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="CategoryScore" EntitySet="CategoryScores" />
-          </AssociationSet>
           <AssociationSet Name="FK_Category_CategoryType" Association="Self.FK_Category_CategoryType">
             <End Role="CategoryType" EntitySet="CategoryTypes" />
             <End Role="Category" EntitySet="Categories" />
@@ -378,21 +353,39 @@ warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryWord' does not
             <End Role="Category" EntitySet="Categories" />
             <End Role="Word" EntitySet="Words" />
           </AssociationSet>
+          <EntitySet Name="Accounts" EntityType="PersonalityPredictionDBModel.Account" />
+          <AssociationSet Name="FK_CategoryScore_Account" Association="PersonalityPredictionDBModel.FK_CategoryScore_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="CategoryScore" EntitySet="CategoryScores" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CategoryScores" Relationship="PersonalityPredictionDBModel.FK_CategoryScore_Account" FromRole="Account" ToRole="CategoryScore" />
+        </EntityType>
+        <Association Name="FK_CategoryScore_Account">
+          <End Type="PersonalityPredictionDBModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="PersonalityPredictionDBModel.CategoryScore" Role="CategoryScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryScore">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PersonalityPredictionDBModelStoreContainer" CdmEntityContainer="PersonalityPredictionDBEntities">
-          <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="PersonalityPredictionDBModel.Account">
-              <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="PersonalityPredictionDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -454,6 +447,15 @@ warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryWord' does not
               <ScalarProperty Name="Id" ColumnName="WordId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="PersonalityPredictionDBModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

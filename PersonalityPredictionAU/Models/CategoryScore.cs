@@ -19,8 +19,8 @@ namespace PersonalityPredictionAU.Models
         public int SourceId { get; set; }
         public double Score { get; set; }
     
-        public virtual Account Account { get; set; }
         public virtual Category Category { get; set; }
         public virtual Source Source { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

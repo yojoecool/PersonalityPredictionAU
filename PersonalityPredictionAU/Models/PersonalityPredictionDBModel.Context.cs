@@ -25,12 +25,12 @@ namespace PersonalityPredictionAU.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryType> CategoryTypes { get; set; }
         public virtual DbSet<Dictionary> Dictionaries { get; set; }
         public virtual DbSet<Source> Sources { get; set; }
         public virtual DbSet<Word> Words { get; set; }
         public virtual DbSet<CategoryScore> CategoryScores { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
     }
 }

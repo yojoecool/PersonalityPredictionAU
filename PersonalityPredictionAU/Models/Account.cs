@@ -22,6 +22,7 @@ namespace PersonalityPredictionAU.Models
     
         public int Id { get; set; }
         public string Email { get; set; }
+        public string UserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CategoryScore> CategoryScores { get; set; }
