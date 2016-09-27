@@ -105,24 +105,69 @@
                     }
                 }
 
+                var contents = {
+                    "name": userID,
+                    "person_tags": [],
+                    "gender": 0,
+                    "content": {
+                        "content_tags": [],
+                        "content_handle": userID,
+                        "language": "english",
+                        "content_source": 0,
+                        "content_date": "2016-09-22T15:19:03.395727",
+                        "recipient_id": "",
+                        "language_content": status,
+                        "custom_fields": {}
+                    },
+                    "person_handle": userID
+                }
+
                 var request = new XMLHttpRequest();
-                request.open("GET", api_server + "/person", false);
+                request.open("POST", api_server + "/person", false);
                 request.setRequestHeader("X-API-KEY", api_key);
                 request.setRequestHeader("X-API-SECRET-KEY", secret_key);
-                request.setRequestHeader("person_handle", "mpearce1800GMAIL.COM")
-                request.send();
-                if (request.status != 200) {
-                    // Create Person here
-                    document.getElementById('status').innerHTML =
-                        "User not found " + request.status;
+                request.setRequestHeader("Content-Type", "application/json");
+                request.send(JSON.stringify(contents));
+                if (request.status == 400) {
+                    var text = request.responseText;
+                    document.getElementById('status').innerHTML = JSON.parse(text).message;
                 }
                 else {
                     var text = request.responseText;
-                    document.getElementById('status').innerHTML =
-                        "User found " + JSON.parse(text.substr(1,text.length-2));
+                    var json_ver = JSON.parse(text);
+                    var liwc = json_ver.contents[0].liwc_scores;
+
+                    // ****************** UNTESTED **********************
+                    $.ajax({
+                        url: api_server + "/person/" + json_ver._id,
+                        type: "DELETE",
+                        error: function () {
+                            alert("Unable to delete person");
+                        }
+                    });
+                    // **************************************************
+
+                    var scores = "";
+                    for (var key in liwc) {
+                        if (key == "categories") {
+                            for (var cat in liwc[key])
+                                scores = scores + cat + " " + liwc[key][cat] + ", ";
+                        } else
+                            scores = scores + key + " " + liwc[key] + ", ";
+                    }
+
+                    $.ajax({
+                        url: "/Home/storeScores",
+                        type: "POST",
+                        data: { scores: scores.substr(0,scores.length-1) },
+                        success: function (response) {
+                            document.getElementById('status').innerHTML = scores;
+                        },
+                        error: function () {
+                            alert("Error");
+                        }
+                    });
                 }
-                // Put content into user here
-                // Analyze here
 
                 $.ajax({
                     url: "/Home/userPostsTxt",
