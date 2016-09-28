@@ -137,36 +137,42 @@
                     var json_ver = JSON.parse(text);
                     var liwc = json_ver.contents[0].liwc_scores;
 
-                    // ****************** UNTESTED **********************
                     $.ajax({
                         url: api_server + "/person/" + json_ver._id,
                         type: "DELETE",
+                        headers: {
+                            "X-API-KEY": api_key,
+                            "X-API-SECRET-KEY": secret_key,
+                        },
                         error: function () {
                             alert("Unable to delete person");
                         }
                     });
-                    // **************************************************
 
                     var scores = "";
+                    var display_scores = "";
                     for (var key in liwc) {
                         if (key == "categories") {
-                            for (var cat in liwc[key])
-                                scores = scores + cat + " " + liwc[key][cat] + ", ";
-                        } else
-                            scores = scores + key + " " + liwc[key] + ", ";
+                            for (var cat in liwc[key]) {
+                                scores = scores + cat + " : " + liwc[key][cat] + ", ";
+                                display_scores = display_scores + cat + " : " + liwc[key][cat] + "<br> ";
+                            }
+                        } else {
+                            scores = scores + key + " : " + liwc[key] + ", ";
+                            display_scores = display_scores + key + " : " + liwc[key] + "<br> ";
+                        }
                     }
 
                     $.ajax({
                         url: "/Home/storeScores",
                         type: "POST",
                         data: { scores: scores.substr(0,scores.length-1) },
-                        success: function (response) {
-                            document.getElementById('status').innerHTML = scores;
-                        },
                         error: function () {
                             alert("Error");
                         }
                     });
+
+                    document.getElementById("status").innerHTML = display_scores;
                 }
 
                 $.ajax({
