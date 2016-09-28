@@ -35,7 +35,9 @@
                 @foreach (var category in group.Select(a => a.w))
                 {
                     <div class="col-xs-3">
-                        @category.Category.Name : @category.Score
+                        <div class="score-panel">
+                            @category.Category.Name : @category.Score.ToString("F4")
+                        </div>
                     </div>
                 }
             </div>
@@ -48,3 +50,12 @@
         </div>
     }
 </div>
+
+<style>
+    .score-panel {
+        padding: 5px 10px 5px 10px;
+        margin: 5px 10px 5px 10px;
+        border: 1px solid #e1e1e8;
+        border-radius: 3px;
+    }
+</style>
