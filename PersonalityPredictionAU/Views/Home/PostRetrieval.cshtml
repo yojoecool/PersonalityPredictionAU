@@ -149,24 +149,27 @@
                         }
                     });
 
-                    var scores = "";
+                    //var scores = "";
                     var display_scores = "";
+                    var Scores = [];
                     for (var key in liwc) {
                         if (key == "categories") {
                             for (var cat in liwc[key]) {
-                                scores = scores + cat + " : " + liwc[key][cat] + ", ";
+                                //scores = scores + cat + " : " + liwc[key][cat] + ", ";
+                                Scores.push({ Category: cat, Score: liwc[key][cat] });
                                 display_scores = display_scores + cat + " : " + liwc[key][cat] + "<br> ";
                             }
                         } else {
-                            scores = scores + key + " : " + liwc[key] + ", ";
+                            //scores = scores + key + " : " + liwc[key] + ", ";
+                            Scores.push({ Category: key, Score: liwc[key] });
                             display_scores = display_scores + key + " : " + liwc[key] + "<br> ";
                         }
                     }
 
                     $.ajax({
-                        url: "/Home/storeScores",
+                        url: "/CategoryScore/Create",
                         type: "POST",
-                        data: { scores: scores.substr(0,scores.length-1) },
+                        data: { Scores: Scores },
                         error: function () {
                             alert("Error");
                         }
