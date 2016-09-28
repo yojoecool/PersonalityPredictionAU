@@ -183,11 +183,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\DictionaryController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\DictionariesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PersonalityAccountController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\WordsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -198,6 +199,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryEditViewModel.cs" />
     <Compile Include="Models\CategoryScore.cs">
       <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
     </Compile>
@@ -234,10 +236,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\PersonalityDB.mdf" />
-    <Content Include="App_Data\PersonalityDB_log.ldf">
-      <DependentUpon>PersonalityDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -261,6 +259,7 @@
     <Content Include="Models\PersonalityPredictionDBModel.edmx.diagram">
       <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\local_publish.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Models\PersonalityPredictionDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -289,8 +288,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Category\Details.cshtml" />
-    <Content Include="Views\PersonalityAccount\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -329,14 +326,29 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\PostRetrieval.cshtml" />
     <Content Include="Views\Home\UnAuthenticated.cshtml" />
-    <Content Include="Views\Dictionary\Index.cshtml" />
-    <Content Include="Views\Dictionary\Create.cshtml" />
-    <Content Include="Views\Dictionary\Delete.cshtml" />
-    <Content Include="Views\Dictionary\Edit.cshtml" />
-    <Content Include="Views\Dictionary\Details.cshtml" />
-    <Content Include="Views\PersonalityAccount\Details.cshtml" />
+    <Content Include="Views\Words\Create.cshtml" />
+    <Content Include="Views\Words\Delete.cshtml" />
+    <Content Include="Views\Words\Details.cshtml" />
+    <Content Include="Views\Words\Edit.cshtml" />
+    <Content Include="Views\Words\Index.cshtml" />
+    <Content Include="Views\Dictionaries\Create.cshtml" />
+    <Content Include="Views\Dictionaries\Delete.cshtml" />
+    <Content Include="Views\Dictionaries\Details.cshtml" />
+    <Content Include="Views\Dictionaries\Edit.cshtml" />
+    <Content Include="Views\Dictionaries\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Temp\" />
   </ItemGroup>
   <ItemGroup>
