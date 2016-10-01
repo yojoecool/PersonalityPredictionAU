@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using PersonalityPredictionAU.Models;
 using System.Web.Script.Serialization;
+using System.Net;
 
 namespace PersonalityPredictionAU.Controllers
 {
@@ -56,6 +57,12 @@ namespace PersonalityPredictionAU.Controllers
                 file.Write(response);
             }
             return "/Temp/" + userID + "_posts.txt";
+        }
+
+        [HttpPost]
+        public String storeScores(String scores)
+        {
+            return scores;
         }
     }
 }

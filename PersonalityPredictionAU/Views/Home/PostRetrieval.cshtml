@@ -5,6 +5,9 @@
 
 <script>
     var userID = "";
+    var api_key = "57cdc75b7e6e8105ad19abb4";
+    var secret_key = "DT4i2DaUoJRyqc7fahtsGZRR2KBKT88Eawzsa90ZuRQ";
+    var api_server = "https://app.receptiviti.com/api";
     // This is called with the results from from FB.getLoginStatus().
     function statusChangeCallback(response) {
         console.log('statusChangeCallback');
@@ -90,8 +93,8 @@
             if (response != null && response.hasOwnProperty('data') && response.data.length > 0) {
                 responseKeep = responseKeep.concat(response.data);
                 //document.getElementById('status').innerHTML =
-                    //response.data[0].message;
-                    //response.data[1].message;
+                //response.data[0].message;
+                //response.data[1].message;
                 offset += 100;
                 getPosts();
             }
@@ -101,6 +104,80 @@
                         status = status.concat(responseKeep[i].message.replace('\n', ' ') + "   ");
                     }
                 }
+
+                var contents = {
+                    "name": userID,
+                    "person_tags": [],
+                    "gender": 0,
+                    "content": {
+                        "content_tags": [],
+                        "content_handle": userID,
+                        "language": "english",
+                        "content_source": 0,
+                        "content_date": "2016-09-22T15:19:03.395727",
+                        "recipient_id": "",
+                        "language_content": status,
+                        "custom_fields": {}
+                    },
+                    "person_handle": userID
+                }
+
+                var request = new XMLHttpRequest();
+                request.open("POST", api_server + "/person", false);
+                request.setRequestHeader("X-API-KEY", api_key);
+                request.setRequestHeader("X-API-SECRET-KEY", secret_key);
+                request.setRequestHeader("Content-Type", "application/json");
+                request.send(JSON.stringify(contents));
+                if (request.status == 400) {
+                    var text = request.responseText;
+                    document.getElementById('status').innerHTML = JSON.parse(text).message;
+                }
+                else {
+                    var text = request.responseText;
+                    var json_ver = JSON.parse(text);
+                    var liwc = json_ver.contents[0].liwc_scores;
+
+                    $.ajax({
+                        url: api_server + "/person/" + json_ver._id,
+                        type: "DELETE",
+                        headers: {
+                            "X-API-KEY": api_key,
+                            "X-API-SECRET-KEY": secret_key,
+                        },
+                        error: function () {
+                            alert("Unable to delete person");
+                        }
+                    });
+
+                    //var scores = "";
+                    var display_scores = "";
+                    var Scores = [];
+                    for (var key in liwc) {
+                        if (key == "categories") {
+                            for (var cat in liwc[key]) {
+                                //scores = scores + cat + " : " + liwc[key][cat] + ", ";
+                                Scores.push({ Category: cat, Score: liwc[key][cat] });
+                                display_scores = display_scores + cat + " : " + liwc[key][cat] + "<br> ";
+                            }
+                        } else {
+                            //scores = scores + key + " : " + liwc[key] + ", ";
+                            Scores.push({ Category: key, Score: liwc[key] });
+                            display_scores = display_scores + key + " : " + liwc[key] + "<br> ";
+                        }
+                    }
+
+                    $.ajax({
+                        url: "/CategoryScore/Create",
+                        type: "POST",
+                        data: { Scores: Scores },
+                        error: function () {
+                            alert("Error");
+                        }
+                    });
+
+                    document.getElementById("status").innerHTML = display_scores;
+                }
+
                 $.ajax({
                     url: "/Home/userPostsTxt",
                     type: "POST",
@@ -112,8 +189,8 @@
                         alert("Error");
                     }
                 });
-                document.getElementById('status').innerHTML =
-                    "Finished! Click the link below to download your text file.";
+                //document.getElementById('status').innerHTML =
+                //    "Finished! Click the link below to download your text file.";
                 document.getElementById('downloadLink').removeAttribute('hidden');
             }
         });
