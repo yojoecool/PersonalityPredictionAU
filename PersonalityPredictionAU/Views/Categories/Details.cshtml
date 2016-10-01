@@ -1,0 +1,65 @@
+﻿@model PersonalityPredictionAU.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Category</h4>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Category Name
+        </dt>
+
+        <dd>
+            @Model.Name
+        </dd>
+
+        <dt>
+            Category Type
+        </dt>
+
+        <dd>
+            @Model.CategoryType.Name
+        </dd>
+
+        <dt>
+            Dictionary Name
+        </dt>
+
+        <dd>
+            @Model.Dictionary.Name
+        </dd>
+
+    </dl>
+
+    <br />
+    <h4>Words</h4>
+    @if (Model.Words.Any())
+    {
+        foreach (var group in Model.Words.Select((w, index) => new { w, index }).GroupBy(a => a.index / 4))
+        {
+            <div class="row">
+                @foreach (var word in group.Select(a => a.w))
+                {
+                    <div class="col-xs-3">
+                        @word.Name
+                    </div>
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info">
+            This category contains no words.
+        </div>
+    }
+</div>

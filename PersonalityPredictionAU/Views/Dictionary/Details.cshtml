@@ -1,0 +1,48 @@
+﻿@model PersonalityPredictionAU.Models.Dictionary
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Dictionary</h4>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            Date Created
+        </dt>
+
+        <dd>
+            @Model.Date.ToString("d")
+        </dd>
+
+    </dl>
+    <hr />
+    <h4>Categories</h4>
+
+@foreach (var group in Model.Categories.Select((cat, index) => new { cat, index }).GroupBy(a => a.index / 4))
+{
+    <div class="row">
+            @foreach(var category in group.Select(a => a.cat))
+            {
+                <div class="col-xs-3">
+                    @Html.ActionLink(category.Name, "Details", "Category", new { id = category.Id }, null)
+                </div>
+            }
+    </div>
+}
+</div>

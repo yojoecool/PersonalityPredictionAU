@@ -1,0 +1,61 @@
+﻿@model PersonalityPredictionAU.Models.Account
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Account</h4>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+
+    <hr />
+    <h4>Category Scores</h4>
+    @if (Model.CategoryScores.Any())
+    {
+        foreach (var group in Model.CategoryScores.Select((w, index) => new { w, index }).GroupBy(a => a.index / 4))
+        {
+            <div class="row">
+                @foreach (var category in group.Select(a => a.w))
+                {
+                    <div class="col-xs-3">
+                        <div class="score-panel">
+                            @category.Category.Name : @category.Score.ToString("F4")
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info">
+            This users has no scores.
+        </div>
+    }
+</div>
+
+<style>
+    .score-panel {
+        padding: 5px 10px 5px 10px;
+        margin: 5px 10px 5px 10px;
+        border: 1px solid #e1e1e8;
+        border-radius: 3px;
+    }
+</style>
