@@ -236,10 +236,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\PersonalityDB.mdf" />
-    <Content Include="App_Data\PersonalityDB_log.ldf">
-      <DependentUpon>PersonalityDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -263,6 +259,7 @@
     <Content Include="Models\PersonalityPredictionDBModel.edmx.diagram">
       <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\AUPersonalityPrediction.pubxml" />
     <None Include="Properties\PublishProfiles\local_publish.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Models\PersonalityPredictionDBModel.Context.tt">
@@ -353,6 +350,7 @@
     <Content Include="Views\Categories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Temp\" />
     <Folder Include="Views\CategoryScore\" />
   </ItemGroup>

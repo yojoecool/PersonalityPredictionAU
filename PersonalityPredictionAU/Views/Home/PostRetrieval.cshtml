@@ -170,8 +170,9 @@
                         url: "/CategoryScore/Create",
                         type: "POST",
                         data: { Scores: Scores },
-                        success: function() {
-                            window.location.replace("/Home/Index");
+                        success: function () {
+                            var id = document.getElementById("id").innerHTML;
+                            window.location.replace("/Users/Details?id=" + id);
                         },
                         error: function () {
                             alert("Error");
@@ -207,6 +208,6 @@
     }
 </script>
 <h2>Post Retrieval</h2>
-
+<div hidden id="id">@ViewBag.id</div>
 <div id="status"></div>
 <a href="" id="downloadLink" download hidden>Download File</a>
