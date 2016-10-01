@@ -308,6 +308,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
       <LastGenOutput>PersonalityPredictionDBModel.cs</LastGenOutput>
+    </Content>
     <EntityDeploy Include="PersonalityPredictionDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PersonalityPredictionDB.Designer.cs</LastGenOutput>
