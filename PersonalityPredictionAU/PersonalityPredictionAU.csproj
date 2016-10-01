@@ -248,6 +248,7 @@
     </Compile>
     <Compile Include="Models\Word.cs">
       <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PersonalityPredictionDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
