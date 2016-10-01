@@ -22,14 +22,10 @@
           <Property Name="CategoryTypeId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryScore' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="CategoryScore">
           <Key>
             <PropertyRef Name="AccountId" />
             <PropertyRef Name="CategoryId" />
-            <PropertyRef Name="SourceId" />
-            <PropertyRef Name="Score" />
           </Key>
           <Property Name="AccountId" Type="int" Nullable="false" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
@@ -162,18 +158,11 @@ warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryWord' does not
         <EntityContainer Name="PersonalityPredictionDBModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryScore" EntityType="Self.CategoryScore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryType" EntityType="Self.CategoryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dictionary" EntityType="Self.Dictionary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Word" EntityType="Self.Word" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CategoryScore" EntityType="Self.CategoryScore" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [CategoryScore].[AccountId] AS [AccountId], 
-    [CategoryScore].[CategoryId] AS [CategoryId], 
-    [CategoryScore].[SourceId] AS [SourceId], 
-    [CategoryScore].[Score] AS [Score]
-    FROM [dbo].[CategoryScore] AS [CategoryScore]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="CategoryWord" EntityType="Self.CategoryWord" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [CategoryWord].[CategoryId] AS [CategoryId], 
@@ -263,8 +252,6 @@ warning 6002: The table/view 'PersonalityPredictionDB.dbo.CategoryWord' does not
           <Key>
             <PropertyRef Name="AccountId" />
             <PropertyRef Name="CategoryId" />
-            <PropertyRef Name="SourceId" />
-            <PropertyRef Name="Score" />
           </Key>
           <Property Name="AccountId" Type="Int32" Nullable="false" />
           <Property Name="CategoryId" Type="Int32" Nullable="false" />

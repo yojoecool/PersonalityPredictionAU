@@ -170,14 +170,17 @@
                         url: "/CategoryScore/Create",
                         type: "POST",
                         data: { Scores: Scores },
+                        success: function() {
+                            window.location.replace("/Home/Index");
+                        },
                         error: function () {
                             alert("Error");
                         }
                     });
 
-                    document.getElementById("status").innerHTML = display_scores;
+                    //document.getElementById("status").innerHTML = display_scores;
                 }
-
+    /*
                 $.ajax({
                     url: "/Home/userPostsTxt",
                     type: "POST",
@@ -191,9 +194,10 @@
                 });
                 //document.getElementById('status').innerHTML =
                 //    "Finished! Click the link below to download your text file.";
-                document.getElementById('downloadLink').removeAttribute('hidden');
+                document.getElementById('downloadLink').removeAttribute('hidden');*/
             }
         });
+        
     }
 
     function getID() {

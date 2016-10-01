@@ -1,18 +1,26 @@
 ﻿@model PersonalityPredictionAU.Models.Account
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Scores";
 }
 
-<h2>Details</h2>
+<style>
+    .score-panel {
+        background-color: #003358;
+        color: white;
+    }
+</style>
+
+<h2>Personality Scores</h2>
 
 <div>
-    <h4>Account</h4>
+    <!--<h4>Account</h4>
 
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
+        Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        Html.ActionLink("Back to List", "Index")
     </p>
+        -->
     <hr />
     <dl class="dl-horizontal">
         <dt>

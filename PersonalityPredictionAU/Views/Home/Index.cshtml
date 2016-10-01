@@ -1,29 +1,44 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<style>
+    .jumbotron {
+        background-color: #003358;
+        color: white;
+    }
+    .index_grid {
+        background-color: #bb4e00;
+        color: white;
+    }
+</style>
 <script>
 </script>
 
 <div class="jumbotron">
     <h1>Personality Prediction</h1>
     <div id="FBName"></div>
-    <p class="lead">This is a very early demo showing that we can pull a user's posts from Facebook.</p>
+    <p class="lead">This is a very early demo showing that we can sign in through Facebook, authenticate through an external database, pull a user's posts, call the LIWC API using the user's posts, saving and results to an external database, and displaying those results for the user.</p>
 </div>
 
 @{
     if (User.Identity.IsAuthenticated)
     {
     <div class="row">
-        <div class="col-md-4">
-            <h2>Download User Posts</h2>
+        <div class="col-md-4 index_grid">
+            <h2>Get Scored</h2>
             <p>
-                Go here to download your Facebook posts as a TXT file.
+                Go here to get your personality scored from your Facebook posts.
             </p>
             <p><a class="btn btn-default" href="~/Home/PostRetrieval">Click Here &raquo;</a></p>
         </div>
         <div class="col-md-4">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 index_grid">
+            <h2>View Your Scores</h2>
+            <p>
+                Go here to view your personality scores. (Note: Must get scored first)
+            </p>
+            <p><a class="btn btn-default" href="~/Users/Details?id=@ViewBag.id">Click Here &raquo;</a></p>
         </div>
     </div>
     }

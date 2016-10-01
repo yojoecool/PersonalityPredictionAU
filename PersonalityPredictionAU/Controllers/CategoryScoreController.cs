@@ -32,7 +32,7 @@ namespace PersonalityPredictionAU.Controllers
 
         // POST: CategoryScore/Create
         [HttpPost]
-        public ActionResult Create(List<LiwcScoreModel> Scores)
+        public String Create(List<LiwcScoreModel> Scores)
         {
             try
             {
@@ -60,11 +60,14 @@ namespace PersonalityPredictionAU.Controllers
 
                 // Save changes to database
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return "Success";
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                Console.WriteLine(e.Message);
+                //return View();
+                return "Fail";
             }
         }
 

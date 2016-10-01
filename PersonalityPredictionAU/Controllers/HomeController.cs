@@ -14,6 +14,12 @@ namespace PersonalityPredictionAU.Controllers
     {
         public ActionResult Index()
         {
+            int id = -1;
+            if (User.Identity.IsAuthenticated)
+            {
+                id = new PersonalityPredictionDBEntities().Accounts.FirstOrDefault(a => a.Email == User.Identity.Name).Id;
+            }
+            ViewBag.id = id;
             return View();
         }
 
