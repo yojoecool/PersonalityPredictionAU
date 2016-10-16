@@ -72,8 +72,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -189,6 +187,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\WordsController.cs" />
+    <Compile Include="Controllers\CategoryScoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +209,7 @@
       <DependentUpon>PersonalityPredictionDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LiwcScoreModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PersonalityPredictionDBModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -259,6 +259,7 @@
     <Content Include="Models\PersonalityPredictionDBModel.edmx.diagram">
       <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\AUPersonalityPrediction.pubxml" />
     <None Include="Properties\PublishProfiles\local_publish.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Models\PersonalityPredictionDBModel.Context.tt">
@@ -271,6 +272,7 @@
       <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
       <LastGenOutput>PersonalityPredictionDBModel.cs</LastGenOutput>
     </Content>
+    <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
@@ -350,6 +352,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Temp\" />
+    <Folder Include="Views\CategoryScore\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

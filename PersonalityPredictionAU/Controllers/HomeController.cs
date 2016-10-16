@@ -5,14 +5,23 @@ using System.Web;
 using System.Web.Mvc;
 using PersonalityPredictionAU.Models;
 using System.Web.Script.Serialization;
+using System.Net;
 
 namespace PersonalityPredictionAU.Controllers
 {
     [RequireHttps]
     public class HomeController : Controller
     {
+        private PersonalityPredictionDBEntities db = new PersonalityPredictionDBEntities();
+
         public ActionResult Index()
         {
+            int id = -1;
+            if (User.Identity.IsAuthenticated)
+            {
+                id = new PersonalityPredictionDBEntities().Accounts.FirstOrDefault(a => a.Email == User.Identity.Name).Id;
+            }
+            ViewBag.id = id;
             return View();
         }
 
@@ -34,6 +43,8 @@ namespace PersonalityPredictionAU.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                int id = db.Accounts.FirstOrDefault(a => a.Email == User.Identity.Name).Id;
+                ViewBag.id = id; 
                 return View();
             }
             else return RedirectToAction("UnAuthenticated");
@@ -56,6 +67,12 @@ namespace PersonalityPredictionAU.Controllers
                 file.Write(response);
             }
             return "/Temp/" + userID + "_posts.txt";
+        }
+
+        [HttpPost]
+        public String storeScores(String scores)
+        {
+            return scores;
         }
     }
 }

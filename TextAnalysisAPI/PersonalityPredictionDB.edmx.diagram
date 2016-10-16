@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="43d287dfc5294865b97816fc261faf6f" Name="Diagram1">
+      <Diagram DiagramId="11b2769f56dd4976851c6947a43b9e1d" Name="Diagram1">
         <EntityTypeShape EntityType="PersonalityPredictionDBModel.Category" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="PersonalityPredictionDBModel.CategoryType" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="PersonalityPredictionDBModel.Dictionary" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />

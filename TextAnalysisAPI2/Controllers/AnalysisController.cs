@@ -24,13 +24,14 @@ namespace TextAnalysisAPI.Controllers
         }
 
         // GET: api/Analysis/5
+        [Authorize]
         public JsonResult<List<CategoryScore>> Get(string text)
         {
             Dictionary dictionary = _context.Dictionaries.Find(3);
             string[] words = text.Split(' ');
             List<CategoryScore> scores = new List<CategoryScore>();
             int totalCount = words.Count();
-            foreach(Category category in dictionary.Categories)
+            foreach (Category category in dictionary.Categories.Where(c => c.CategoryType.Name == "WordFrequency"))
             {
                 int categoryCount = 0;
                 foreach (string word in words)
