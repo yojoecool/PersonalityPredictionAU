@@ -74,5 +74,10 @@ namespace PersonalityPredictionAU.Controllers
         {
             return scores;
         }
+
+        public ActionResult TestSlideshow()
+        {
+            return View();
+        }
     }
 }

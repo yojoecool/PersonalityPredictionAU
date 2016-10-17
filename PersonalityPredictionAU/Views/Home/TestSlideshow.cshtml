@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "TestSlideshow";
+}
+<link href="~/Style/simple-slideshow-styles.css" rel="stylesheet" />
+<link href="~/Style/styles.css" rel="stylesheet" />
+<script src="~/Scripts/better-simple-slideshow.min.js"></script>
+
+<script>
+    var opts = {
+        auto : false,
+        fullScreen : true,
+        swipe : false
+    };
+    makeBSS('.num2', opts);
+</script>
+
+<h2>TestSlideshow</h2>
+
+<div class="bss-slides num2" tabindex="2">
+    <figure>
+        <img src="~/img/folder.jpg" width="100%" /><figcaption>"Snowying" by <a href="http://www.flickr.com/photos/fiddleoak/8511209344/">fiddleoak</a>.</figcaption>
+    </figure>
+</div> <!-- // bss-slides -->

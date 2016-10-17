@@ -55,6 +55,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.3\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
@@ -126,6 +130,14 @@
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.3.2.3\lib\net45\WebMatrix.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.3.2.3\lib\net45\WebMatrix.WebData.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -258,6 +270,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PersonalityPredictionDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="img\folder.jpg" />
     <Content Include="jqwidgets\globalization\globalize.culture.cs-CZ.js" />
     <Content Include="jqwidgets\globalization\globalize.culture.de-DE.js" />
     <Content Include="jqwidgets\globalization\globalize.culture.en-CA.js" />
@@ -693,6 +706,8 @@
     <None Include="Properties\PublishProfiles\local_publish.pubxml" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\better-simple-slideshow.js" />
+    <Content Include="Scripts\better-simple-slideshow.min.js" />
     <Content Include="Scripts\jquery-1.11.1.min.map" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Models\PersonalityPredictionDBModel.Context.tt">
@@ -737,6 +752,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Style\simple-slideshow-styles.css" />
+    <Content Include="Style\styles.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -795,6 +812,7 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Home\TestSlideshow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -810,78 +828,6 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxbargauge.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxbulletchart.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxbuttongroup.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxbuttons.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxcalendar.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxchart.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxcheckbox.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxcolorpicker.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxcombobox.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxcomplexinput.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdataadapter.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdatatable.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdatetimeinput.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdocking.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdockinglayout.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdockpanel.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdragdrop.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdraw.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdropdownbutton.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxdropdownlist.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxeditor.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxexpander.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxfileupload.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxformattedinput.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxgauge.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxgrid.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxinput.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxkanban.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxknob.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxlayout.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxlineargauge.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxlistbox.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxlistmenu.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxloader.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxmaskedinput.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxmenu.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxnavbar.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxnavigationbar.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxnotification.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxnumberinput.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxpanel.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxpasswordinput.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxpopover.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxprogressbar.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxradiobutton.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxrangeselector.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxrating.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxresponse.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxresponsivepanel.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxribbon.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxscheduler.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxscrollbar.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxscrollview.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxslider.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxsortable.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxsplitter.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxswitchbutton.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtabs.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtagcloud.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtextarea.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtogglebutton.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtoolbar.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtooltip.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtouch.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtree.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtreegrid.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxtreemap.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxvalidator.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\angular_jqxwindow.ts" />
-    <TypeScriptCompile Include="jqwidgets-ts\jqwidgets.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
