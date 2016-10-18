@@ -1,4 +1,4 @@
-﻿@model PersonalityPredictionAU.Models.Account
+﻿@model string
 
 @{
     ViewBag.Title = "Scores";
@@ -13,7 +13,9 @@
 
 <h2>Personality Scores</h2>
 
-<div>
+@Model
+
+@*<div>*@
     <!--<h4>Account</h4>
 
     <p>
@@ -21,7 +23,7 @@
         Html.ActionLink("Back to List", "Index")
     </p>
         -->
-    <hr />
+    @*<hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Email)
@@ -66,4 +68,4 @@
         border: 1px solid #e1e1e8;
         border-radius: 3px;
     }
-</style>
+</style>*@
