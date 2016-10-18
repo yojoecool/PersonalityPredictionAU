@@ -32,6 +32,7 @@ namespace PersonalityPredictionAU.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Testing = "test";
             return View(account);
         }
 

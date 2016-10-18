@@ -2,23 +2,51 @@
 @{
     ViewBag.Title = "TestSlideshow";
 }
-<link href="~/Style/simple-slideshow-styles.css" rel="stylesheet" />
-<link href="~/Style/styles.css" rel="stylesheet" />
-<script src="~/Scripts/better-simple-slideshow.min.js"></script>
-
-<script>
-    var opts = {
-        auto : false,
-        fullScreen : true,
-        swipe : false
-    };
-    makeBSS('.num2', opts);
-</script>
+<link href="~/Style/w3.css" rel="stylesheet" />
 
 <h2>TestSlideshow</h2>
 
-<div class="bss-slides num2" tabindex="2">
-    <figure>
-        <img src="~/img/folder.jpg" width="100%" /><figcaption>"Snowying" by <a href="http://www.flickr.com/photos/fiddleoak/8511209344/">fiddleoak</a>.</figcaption>
-    </figure>
-</div> <!-- // bss-slides -->
+<div class="w3-content" style="max-width:800px;position:relative">
+    <div class="w3-display-container changeImage w3-animate-opacity" id="Phrenology">
+        <img src="~/img/folder.jpg" width="100%" />
+        <div class="w3-display-bottomleft w3-container w3-padding-16 w3-black">
+            Phrenology, The Roots
+        </div>
+    </div>
+
+    <div class="w3-display-container changeImage w3-animate-opacity" id="2020">
+        <img src="~/img/reach_album_2020.jpg" width="100%" />
+        <div class="w3-display-bottomleft w3-container w3-padding-16 w3-black">
+            20/20, Trip Lee
+        </div>
+    </div>
+
+        <a class="w3-btn-floating" style="position:absolute;top:45%;left:0" onclick="plusDivs(-1)">❮</a>
+        <a class="w3-btn-floating" style="position:absolute;top:45%;right:0" onclick="plusDivs(1)">❯</a>
+    </div>
+
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("changeImage");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+
+    $(document).ready(function () {
+        $("#Phrenology").click(function () {
+            alert("Phrenology");
+        });
+    });
+</script>

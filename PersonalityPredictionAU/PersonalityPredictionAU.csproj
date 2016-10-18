@@ -270,7 +270,10 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PersonalityPredictionDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="img\arrows-alt_ffffff_64.png" />
+    <Content Include="img\compress_ffffff_64.png" />
     <Content Include="img\folder.jpg" />
+    <Content Include="img\reach_album_2020.jpg" />
     <Content Include="jqwidgets\globalization\globalize.culture.cs-CZ.js" />
     <Content Include="jqwidgets\globalization\globalize.culture.de-DE.js" />
     <Content Include="jqwidgets\globalization\globalize.culture.en-CA.js" />
@@ -708,6 +711,8 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\better-simple-slideshow.js" />
     <Content Include="Scripts\better-simple-slideshow.min.js" />
+    <Content Include="Scripts\hammer-time.min.js" />
+    <Content Include="Scripts\hammer.min.js" />
     <Content Include="Scripts\jquery-1.11.1.min.map" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Models\PersonalityPredictionDBModel.Context.tt">
@@ -754,6 +759,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Style\simple-slideshow-styles.css" />
     <Content Include="Style\styles.css" />
+    <Content Include="Style\w3.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
