@@ -3,8 +3,68 @@
     ViewBag.Title = "TestSlideshow";
 }
 <link href="~/Style/w3.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/jqwidgets/styles/jqx.base.css" type="text/css" />
+<script src="~/Scripts/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxdraw.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxchart.core.js"></script>
+<script src="~/jqwidgets/jqxchart.js"></script>
+<script type="text/javascript" src="~/jqwidgets/jqxdata.js"></script>
 
-<h2>TestSlideshow</h2>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // prepare chart data
+        var sampleData = [
+            { Country: 'China', Population: 1347350000, Percent: 19.18 },
+            { Country: 'India', Population: 1210193422, Percent: 17.22 },
+            { Country: 'USA', Population: 313912000, Percent: 4.47 },
+            { Country: 'Indonesia', Population: 237641326, Percent: 3.38 },
+            { Country: 'Brazil', Population: 192376496, Percent: 2.74 }];
+        // prepare jqxChart settings
+        var settings = {
+            title: "Personality Scores",
+            description: "User's Scores from Facebook",
+            showLegend: true,
+            enableAnimations: true,
+            padding: { left: 20, top: 5, right: 20, bottom: 5 },
+            titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+            source: sampleData,
+            xAxis:
+            {
+                dataField: 'Country',
+                gridLines: { visible: true },
+                flip: false
+            },
+            valueAxis:
+            {
+                flip: true,
+                labels: {
+                    visible: true,
+                    formatFunction: function (value) {
+                        return parseInt(value / 1000000);
+                    }
+                }
+            },
+            colorScheme: 'scheme01',
+            seriesGroups:
+                [
+                    {
+                        type: 'column',
+                        orientation: 'horizontal',
+                        columnsGapPercent: 50,
+                        toolTipFormatSettings: { thousandsSeparator: ',' },
+                        series: [
+                                { dataField: 'Population', displayText: 'Population (millions)' }
+                        ]
+                    }
+                ]
+        };
+        // setup the chart
+        $('#chartContainer').jqxChart(settings);
+    });
+</script>
+
+<h2>Test Slideshow and Chart</h2>
 
 <div class="w3-content" style="max-width:800px;position:relative">
     <div class="w3-display-container changeImage w3-animate-opacity" id="Phrenology">
@@ -23,7 +83,10 @@
 
         <a class="w3-btn-floating" style="position:absolute;top:45%;left:0" onclick="plusDivs(-1)">❮</a>
         <a class="w3-btn-floating" style="position:absolute;top:45%;right:0" onclick="plusDivs(1)">❯</a>
-    </div>
+</div>
+
+<div id='chartContainer' style="width:850px; height:500px;">
+</div>
 
 <script>
     var slideIndex = 1;
