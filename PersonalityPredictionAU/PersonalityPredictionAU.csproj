@@ -709,8 +709,6 @@
     <None Include="Properties\PublishProfiles\local_publish.pubxml" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\better-simple-slideshow.js" />
-    <Content Include="Scripts\better-simple-slideshow.min.js" />
     <Content Include="Scripts\hammer-time.min.js" />
     <Content Include="Scripts\hammer.min.js" />
     <Content Include="Scripts\jquery-1.11.1.min.map" />
