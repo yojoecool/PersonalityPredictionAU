@@ -17,14 +17,73 @@
 <script type="text/javascript" src="~/jqwidgets/jqxdata.js"></script>
 
 <script>
+    var toolTipCustomFormatFn = function (value, itemIndex, serie, group, categoryValue, categoryAxis) {
+        var dataItem = data[itemIndex];
+        return '<DIV style="text-align:left"><b>Category: ' + categoryValue +
+            '</b><br />Percentage: ' + value.Score + "%";
+    };
+
     $(document).ready(function () {
         var test = @Html.Raw(Json.Encode(Model));
-        var json = JSON.parse(test);
-        alert(JSON.stringify(json));
-    })
+        var data = JSON.parse(test);
+
+        // prepare jqxChart settings
+        var settings = {
+            title: "Personality Scores",
+            description: "User's Scores from Facebook",
+            showLegend: true,
+            enableAnimations: true,
+            padding: { left: 20, top: 5, right: 20, bottom: 5 },
+            titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+            source: data,
+            xAxis:
+            {
+                dataField: 'Category',
+                gridLines: { visible: true },
+                flip: false,
+                title: {
+                    text: "Categories"
+                },
+                labels: {
+                    visible: true,
+                    angle: 90
+                }
+            },
+            valueAxis:
+            {
+                flip: true,
+                labels: {
+                    visible: true,
+                    formatSettings:
+                    {
+                        decimalPlaces: 2
+                    }
+                }
+            },
+            colorScheme: 'scheme01',
+            seriesGroups:
+                [
+                    {
+                        type: 'column',
+                        orientation: 'horizontal',
+                        horizontalTextAlignment: 'right',
+                        toolTipFormatSettings: {
+                            decimalPlaces: 3,
+                            decimalSeparator: '.',
+                            negativeWithBrackets: true
+                        },
+                        series: [
+                                { dataField: 'Score', displayText: 'Score' }
+                        ]
+                    }
+                ]
+        };
+        // setup the chart
+        $('#chartContainer').jqxChart(settings);
+    });
 </script>
 
-<h2>Personality Scores</h2>
+<h2 style="padding-top:1em;">Personality Scores</h2>
 
 <div>
     <!--<h4>Account</h4>
@@ -34,6 +93,24 @@
         Html.ActionLink("Back to List", "Index")
     </p>
         -->
+</div>
+
+<div class="row" style="width:100%">
+    <div class="col-md-6 w3-animate-opacity">
+        <div id='chartContainer' style="width:100%; height:2000px;">
+        </div>
+    </div>
+    <div class="col-md-6 w3-animate-opacity">
+        <div style="width:100%; height:2000px;">
+                <b>Analysis:</b>
+                <p>This is where the analysis would be for the personality prediction.</p>
+        </div>
+    </div>
+</div>
+
+<div style="padding-top: 1em;" class="w3-animate-opacity">
+    <b>Conclusion:</b>
+    <p>This is where the conclusion would be.</p>
 </div>
 
 <style>

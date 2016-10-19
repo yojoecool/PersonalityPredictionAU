@@ -5,41 +5,90 @@
     .jumbotron {
         background-color: #003358;
         color: white;
+        height: 300px;
+        text-align: center;
     }
     .index_grid {
-        background-color: #bb4e00;
+        cursor: pointer;
+        text-align: center;
         color: white;
+    }
+    #ScoredJumbo {
+        background-color: #e05e00;
+    }
+    #WelcomeJumbo {
+        cursor: initial;
+    }
+    .col-md-4 {
+        border-radius: 10px;
     }
 </style>
 <script>
+    $(document).ready(function () {
+        $("#ScoredJumbo").click(function () {
+            window.location.href = "/Home/PostRetrieval";
+        });
+
+        $("#ProfileJumbo").click(function () {
+            window.location.href = "/Users/Details?id=@ViewBag.id";
+        });
+    });
 </script>
 
-<div class="jumbotron">
-    <h1>Personality Prediction</h1>
-    <div id="FBName"></div>
-    <p class="lead">This is a very early demo showing that we can sign in through Facebook, authenticate through an external database, pull a user's posts, call the LIWC API using the user's posts, saving and results to an external database, and displaying those results for the user.</p>
+<div class="w3-content" style="position:relative">
+    <div class="jumbotron w3-display-container changeImage w3-animate-opacity" id="WelcomeJumbo">
+        <h1>Welcome!</h1>
+        <p class="lead">This demo will show that we can use our own API to get category scores.</p>
+    </div>
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <div class="jumbotron w3-display-container changeImage w3-animate-opacity" id="ScoredJumbo">
+                <h1>Get Scored</h1>
+                <p class="lead">Click Here to get scored!</p>
+            </div>
+
+            <div class="jumbotron w3-display-container changeImage w3-animate-opacity" id="ProfileJumbo">
+                <h1>View Profile</h1>
+                <p class="lead">Click Here to view your scores!</p>
+            </div>
+
+            <a class="w3-btn-floating" style="position:absolute;top:45%;left:0" onclick="plusDivs(-1)">❮</a>
+            <a class="w3-btn-floating" style="position:absolute;top:45%;right:0" onclick="plusDivs(1)">❯</a>
+        }
+    }
+
 </div>
 
-@{
-    if (User.Identity.IsAuthenticated)
-    {
-    <div class="row">
-        <div class="col-md-4 index_grid">
-            <h2>Get Scored</h2>
-            <p>
-                Go here to get your personality scored from your Facebook posts.
-            </p>
-            <p><a class="btn btn-default" href="~/Home/PostRetrieval">Click Here &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4 index_grid">
-            <h2>View Your Scores</h2>
-            <p>
-                Go here to view your personality scores. (Note: Must get scored first)
-            </p>
-            <p><a class="btn btn-default" href="~/Users/Details?id=@ViewBag.id">Click Here &raquo;</a></p>
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("changeImage");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+</script>
+
+<div class="row w3-animate-bottom" style="width:100%;">
+    <div class="col-md-4" style="background-color: #003358">
+        <div class="index_grid" id="AboutUs">
+            <h2>About Us</h2>
         </div>
     </div>
-    }
-}
+    <div class="col-md-4 col-md-offset-4" style="background-color: #ff6a00">
+        <div class="index_grid" id="AboutResearch">
+            <h2>Research</h2>
+        </div>
+    </div>
+</div>

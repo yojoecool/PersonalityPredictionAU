@@ -48,7 +48,8 @@ namespace PersonalityPredictionAU.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Account account = db.Accounts.Find(id);
-            string json = JsonConvert.SerializeObject(account.CategoryScores.Select(cs => new { Category = cs.Category.Name, Score = cs.Score }));
+            string json = JsonConvert.SerializeObject(account.CategoryScores.Select(cs => new { Category = cs.Category.Name, Score = cs.Score })
+                .Where(a => a.Score <= 1.0 && a.Category != "dic" && a.Category != "sixLtr" && a.Category != "function"));
             if (account == null)
             {
                 return HttpNotFound();
