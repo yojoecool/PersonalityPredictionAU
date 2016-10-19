@@ -28,6 +28,7 @@
     <script src="~/Scripts/jquery-3.1.0.js" type="text/javascript"></script>
     <script src="~/Scripts/hammer-time.min.js"></script>
     <script src="~/Scripts/hammer.min.js"></script>
+    <link href="~/Style/w3.css" rel="stylesheet" />
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -42,9 +43,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @{
+                        /*
+                        if (User.Identity.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Scores", "PostRetrieval", "Home")</li>
+                        }
+                        */
+                   }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

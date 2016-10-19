@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PersonalityPredictionAU.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace PersonalityPredictionAU.Controllers
 {
@@ -20,6 +22,7 @@ namespace PersonalityPredictionAU.Controllers
             return View(db.Accounts.ToList());
         }
 
+        /*
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
@@ -34,6 +37,23 @@ namespace PersonalityPredictionAU.Controllers
             }
             ViewBag.Testing = "test";
             return View(account);
+        }
+        */
+
+        // GET: Users/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Account account = db.Accounts.Find(id);
+            string json = JsonConvert.SerializeObject(account.CategoryScores.Select(cs => new { Category = cs.Category.Name, Score = cs.Score }));
+            if (account == null)
+            {
+                return HttpNotFound();
+            }
+            return View((object)json);
         }
 
         // GET: Users/Create

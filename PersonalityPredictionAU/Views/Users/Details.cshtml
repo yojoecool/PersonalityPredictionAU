@@ -1,4 +1,4 @@
-﻿@model PersonalityPredictionAU.Models.Account
+﻿@model System.String
 
 @{
     ViewBag.Title = "Scores";
@@ -18,8 +18,9 @@
 
 <script>
     $(document).ready(function () {
-        var test = '@ViewBag.Testing';
-        alert(test);
+        var test = @Html.Raw(Json.Encode(Model));
+        var json = JSON.parse(test);
+        alert(JSON.stringify(json));
     })
 </script>
 
@@ -33,42 +34,6 @@
         Html.ActionLink("Back to List", "Index")
     </p>
         -->
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-    </dl>
-
-    <hr />
-    <h4>Category Scores</h4>
-    @if (Model.CategoryScores.Any())
-    {
-        foreach (var group in Model.CategoryScores.Select((w, index) => new { w, index }).GroupBy(a => a.index / 4))
-        {
-            <div class="row">
-                @foreach (var category in group.Select(a => a.w))
-                {
-                    <div class="col-xs-3">
-                        <div class="score-panel">
-                            @category.Category.Name : @category.Score.ToString("F4")
-                        </div>
-                    </div>
-                }
-            </div>
-        }
-    }
-    else
-    {
-        <div class="alert alert-info">
-            This users has no scores.
-        </div>
-    }
 </div>
 
 <style>

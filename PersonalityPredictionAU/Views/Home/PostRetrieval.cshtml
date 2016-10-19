@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Pull Retrieval";
 }
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 
 <script>
     var userID = "";
@@ -210,4 +212,8 @@
 <h2>Post Retrieval</h2>
 <div hidden id="id">@ViewBag.id</div>
 <div id="status"></div>
-<a href="" id="downloadLink" download hidden>Download File</a>
+<div>
+    <div class="w3-container">
+        <p><i class="fa fa-spinner w3-spin" style="font-size:50px"></i></p>
+    </div>
+</div>
