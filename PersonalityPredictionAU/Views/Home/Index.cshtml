@@ -20,11 +20,15 @@
         cursor: initial;
     }
     #ProfileJumbo {
-        background-color: #dbb900;
+        background-color: #069300;
     }
     .col-md-4 {
         border-radius: 10px;
     }
+    
+    .changeImage {display:none}
+    .w3-left, .w3-right, .w3-badge {cursor:pointer}
+    .w3-badge {height:13px;width:13px;padding:0}
 </style>
 <script>
     $(document).ready(function () {
@@ -38,7 +42,7 @@
     });
 </script>
 
-<div class="w3-content" style="position:relative">
+<div class="w3-content w3-display-container" style="position:relative">
     <div class="jumbotron w3-display-container changeImage w3-animate-opacity" id="WelcomeJumbo">
         <h1>Welcome!</h1>
         <p class="lead">This demo will show that we can use our own API to get category scores.</p>
@@ -55,9 +59,14 @@
                 <h1>View Profile</h1>
                 <p class="lead">Click Here to view your scores!</p>
             </div>
-
-            <a class="w3-btn-floating" style="position:absolute;top:45%;left:0" onclick="plusDivs(-1)">❮</a>
-            <a class="w3-btn-floating" style="position:absolute;top:45%;right:0" onclick="plusDivs(1)">❯</a>
+            
+            <div class="w3-center w3-section w3-large w3-text-white w3-display-bottomleft" style="width:100%">
+                <div class="w3-left w3-padding-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+                <div class="w3-right w3-padding-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+                <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+                <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+                <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+            </div>
         }
     }
 
@@ -71,15 +80,24 @@
         showDivs(slideIndex += n);
     }
 
+    function currentDiv(n) {
+        showDivs(slideIndex = n);
+    }
+
     function showDivs(n) {
         var i;
         var x = document.getElementsByClassName("changeImage");
+        var dots = document.getElementsByClassName("demo");
         if (n > x.length) { slideIndex = 1 }
         if (n < 1) { slideIndex = x.length }
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" w3-white", "");
+        }
         x[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " w3-white";
     }
 </script>
 

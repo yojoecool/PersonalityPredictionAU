@@ -228,7 +228,7 @@ input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:d
 .w3-animate-fading{-webkit-animation:fading 10s infinite;animation:fading 10s infinite}
 @-webkit-keyframes fading{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
 @keyframes fading{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
-.w3-animate-opacity{-webkit-animation:opac 1s;animation:opac 1s}
+.w3-animate-opacity{-webkit-animation:opac 500ms;animation:opac 500ms}
 @-webkit-keyframes opac{from{opacity:0} to{opacity:1}}
 @keyframes opac{from{opacity:0} to{opacity:1}}
 .w3-animate-top{position:relative;-webkit-animation:animatetop 0.4s;animation:animatetop 0.4s}

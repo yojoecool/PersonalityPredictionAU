@@ -173,7 +173,7 @@
                         type: "POST",
                         data: { Scores: Scores },
                         success: function () {
-                            document.getElementById('status').innerHTML = 'Success!  Redirecting you to view results....';
+                            document.getElementById('status').innerHTML = '<b>***Success!  Redirecting you to view results....***</b>';
                             var id = document.getElementById("id").innerHTML;
                             window.location.replace("/Users/Details?id=" + id);
                         },
