@@ -9,15 +9,33 @@
     //    });
     //});
     $(document).ready(function () {
-        $("#Facebook").attr("src", "/img/FacebookLogin.png");
+        $(".Facebook").attr("src", "/img/FacebookLogin.png");
     })
 </script>
 <style>
     #Facebook {
-        width: 220px;
-        height: 50px;
+        width: 200px;
+        height: 48px;
+    }
+    img.Facebook {
+        width: 175px;
+        height: 36px;
+        display: inline-block;
+    }
+    img.Facebook:hover {
+        box-shadow: 0 1px 8px black;
+        -moz-box-shadow: 0 1px 8px black;
+        -webkit-box-shadow: 0 1px 8px black;
     }
     .btn {
+        border: none;
+        outline: none;
+    }
+    .btn:hover,
+    .btn:focus,
+    .btn:hover:focus {
+        background-color: white;
+        outline: none;
         border: none;
     }
 </style>
@@ -39,7 +57,7 @@
             <div id="socialLoginList">
                 <p>
                     @foreach (AuthenticationDescription p in loginProviders) {
-                        <input type="image" src="" class="btn btn-default w3-animate-bottom" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account" />
+                        <button type="submit" class="btn btn-default w3-animate-bottom" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account" ><img class="@p.AuthenticationType" src="" /></button>
                     }
                 </p>
             </div>
