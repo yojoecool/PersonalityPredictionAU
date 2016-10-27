@@ -706,6 +706,7 @@
     <Content Include="Models\PersonalityPredictionDBModel.edmx.diagram">
       <DependentUpon>PersonalityPredictionDBModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\AuburnPersonalityPrediction.pubxml" />
     <None Include="Properties\PublishProfiles\AUPersonalityPrediction.pubxml" />
     <None Include="Properties\PublishProfiles\local_publish.pubxml" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
