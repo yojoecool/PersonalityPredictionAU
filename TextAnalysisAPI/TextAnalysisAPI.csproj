@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44346</IISExpressSSLPort>
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -305,6 +305,8 @@
     <Content Include="PersonalityPredictionDB.edmx.diagram">
       <DependentUpon>PersonalityPredictionDB.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\TextAnalysisAPI - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\TextAnalysisAPI - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
