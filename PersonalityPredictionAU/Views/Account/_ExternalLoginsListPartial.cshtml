@@ -9,27 +9,35 @@
     //    });
     //});
     $(document).ready(function () {
-        $(".Facebook").attr("src", "/img/FacebookLogin.png");
+        $("#Facebook").attr("src", "/img/FacebookLogin.png");
+        $("#Facebook").click(function () {
+            $("#formSubmit").val("Facebook");
+            $("form").submit();
+        })
     })
 </script>
 <style>
+    /*
     #Facebook {
         width: 200px;
         height: 48px;
     }
-    img.Facebook {
+        */
+    img#Facebook {
         width: 175px;
         height: 36px;
-        display: inline-block;
     }
-    img.Facebook:hover {
+    img#Facebook:hover {
         box-shadow: 0 1px 8px black;
         -moz-box-shadow: 0 1px 8px black;
         -webkit-box-shadow: 0 1px 8px black;
+        cursor: pointer;
     }
+    /*
     .btn {
         border: none;
         outline: none;
+        visibility: hidden;
     }
     .btn:hover,
     .btn:focus,
@@ -38,6 +46,7 @@
         outline: none;
         border: none;
     }
+        */
 </style>
 <h4>Use one of the services below to log-in.</h4>
 <hr />
@@ -56,10 +65,13 @@
             @Html.AntiForgeryToken()
             <div id="socialLoginList">
                 <p>
-                    @foreach (AuthenticationDescription p in loginProviders) {
-                        <button type="submit" class="btn btn-default w3-animate-bottom" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account" ><img class="@p.AuthenticationType" src="" /></button>
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
+                        <img id="@p.AuthenticationType" class="w3-animate-bottom" src="" title="Log in using your @p.Caption account" />
+                        <!--<button type="submit" class="btn btn-default w3-animate-bottom" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account" ></button>-->
                     }
                 </p>
+                <input type="hidden" value="" name="provider" id="formSubmit" />
             </div>
         }
     }
