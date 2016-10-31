@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using PersonalityPredictionAU.Models;
 using System.Web.Script.Serialization;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PersonalityPredictionAU.Controllers
 {
@@ -67,41 +69,20 @@ namespace PersonalityPredictionAU.Controllers
             // Keys for accessing API
             String api_key = "57f4699a7ba60a05aad03fcf";
             String api_secret_key = "oJ1bk5DlRmDkzneGKvr459Zs56Z1DNrEzyrpdnlhCS0";
-            String url = "https://textanalysisapi.azurewebsites.net/api/textanalysis?text=\"" + content + "\"";
+            String url = "https://textanalysisapi.azurewebsites.net/api/textanalysis";
 
             // Setting up the request to the API
             // TODO Add exception handling for 400,404,etc. responses
             WebClient request = new WebClient();
-            //request.Headers.Add("Content-Type", "application/json");
-            //request.Headers.Add("X-API-KEY", api_key);
-            //request.Headers.Add("X-API-SECRET-KEY", api_secret_key);
-            //byte[] responseArray = request.UploadData("https://app.receptiviti.com/api/person", "POST", System.Text.Encoding.ASCII.GetBytes(content));
-            byte[] responseArray = request.DownloadData(url);
+            request.Headers.Add("Content-Type", "application/json");
+            String responseText = request.UploadString(url, JsonConvert.SerializeObject(content));
 
-            // Preprocess the response to target the scores
-            String responseText = System.Text.Encoding.ASCII.GetString(responseArray);
-            int start = responseText.IndexOf("\"liwc_scores\"");
-            int end = responseText.IndexOf("\"content_date\"");
-            responseText = responseText.Substring(start + 16, end - start - 20);
-
-            // Iteratively retrieve the scores
+            // Interpret the JSON response
+            JArray a = JArray.Parse(responseText);
             List<LiwcScoreModel> Scores = new List<LiwcScoreModel>();
-            while (responseText.Length > 0)
+            foreach (JObject obj in a.Children<JObject>())
             {
-                LiwcScoreModel mod = new LiwcScoreModel();
-                int subStart = responseText.IndexOf("\"") + 1;  // Each category is delimited by quotes
-                int subEnd = responseText.IndexOf(":") - 1;     // The : is a good landmark for the end of the category
-                mod.Category = responseText.Substring(subStart, subEnd - subStart); // Retrieve the Category
-                if (mod.Category == "categories")   // This entry contains a list of the individual, non-aggregate scores
-                {
-                    responseText = responseText.Substring(subEnd + 4);  // Repurpose the string to ignore the "categories" label and parse the scores again
-                    continue;
-                }
-                subStart = subEnd + 3;  // Move subStart to the beginning of the score itself
-                subEnd = (responseText.Contains(",") ? responseText.IndexOf(",") : responseText.Length);    // Find the end of the score
-                mod.Score = (float) Convert.ToDouble(responseText.Substring(subStart, subEnd - subStart));  // Save the score
-                Scores.Add(mod);
-                responseText = (responseText.Length == subEnd ? "" : responseText.Substring(subEnd + 1));   // Progress the response text to the next category
+                Scores.Add(obj.ToObject<LiwcScoreModel>());
             }
 
             this.addToDB(Scores);
