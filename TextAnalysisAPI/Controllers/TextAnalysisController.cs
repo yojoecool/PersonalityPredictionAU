@@ -24,7 +24,13 @@ namespace TextAnalysisAPI.Controllers
         }
 
         // GET: api/TextAnalysis/5
-        public JsonResult<List<CategoryScore>> Get(string text)
+        public void Get(string text)
+        {
+            
+        }
+
+        // POST: api/TextAnalysis
+        public JsonResult<List<CategoryScore>> Post(string text)
         {
             List<CategoryScore> scores = new List<CategoryScore>();
             Dictionary dictionary = _context.Dictionaries.Find(3);
@@ -48,11 +54,6 @@ namespace TextAnalysisAPI.Controllers
 
             }
             return Json(scores);
-        }
-
-        // POST: api/TextAnalysis
-        public void Post([FromBody]string value)
-        {
         }
 
         // PUT: api/TextAnalysis/5
