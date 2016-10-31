@@ -17,7 +17,7 @@ namespace PersonalityPredictionAU.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
-        private static HttpClient client = new HttpClient();
+        private static HttpClient client = null;
         private PersonalityPredictionDBEntities _context = new PersonalityPredictionDBEntities();
 
         public ActionResult Index()
@@ -134,9 +134,13 @@ namespace PersonalityPredictionAU.Controllers
         public async Task<String> AnalyzeText(string text)
         {
             String PostUrl = "http://textanalysisapi.azurewebsites.net/api/TextAnalysis";
-            client.BaseAddress = new Uri("http://textanalysisapi.azurewebsites.net");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            if (client == null)
+            {
+                client = new HttpClient();
+                client.BaseAddress = new Uri("http://textanalysisapi.azurewebsites.net");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            }
 
             HttpContent content = new StringContent(JsonConvert.SerializeObject(text), Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(PostUrl, content).Result;
