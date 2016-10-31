@@ -6,13 +6,19 @@ using System.Web.Mvc;
 using PersonalityPredictionAU.Models;
 using System.Web.Script.Serialization;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace PersonalityPredictionAU.Controllers
 {
     [RequireHttps]
     public class HomeController : Controller
     {
-        private PersonalityPredictionDBEntities db = new PersonalityPredictionDBEntities();
+        private static HttpClient client = new HttpClient();
+        private PersonalityPredictionDBEntities _context = new PersonalityPredictionDBEntities();
 
         public ActionResult Index()
         {
@@ -43,7 +49,7 @@ namespace PersonalityPredictionAU.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                int id = db.Accounts.FirstOrDefault(a => a.Email == User.Identity.Name).Id;
+                int id = _context.Accounts.FirstOrDefault(a => a.Email == User.Identity.Name).Id;
                 ViewBag.id = id; 
                 return View();
             }
@@ -83,6 +89,70 @@ namespace PersonalityPredictionAU.Controllers
         public ActionResult test()
         {
             return View();
+        }
+
+        private String Create(List<LiwcScoreModel> Scores)
+        {
+            try
+            {
+                // Find the user in the account table
+                string username = User.Identity.Name;
+                Account user = _context.Accounts.FirstOrDefault(a => a.Email == username);
+
+                // Remove previous scores
+                foreach (CategoryScore catScore in user.CategoryScores.ToList())
+                {
+                    _context.CategoryScores.Remove(catScore);
+                }
+
+                // Add in new scores
+                foreach (LiwcScoreModel score in Scores)
+                {
+                    _context.CategoryScores.Add(new CategoryScore()
+                    {
+                        Account = user,
+                        Category = _context.Categories.FirstOrDefault(c => c.Name == score.CategoryName),
+                        SourceId = 1,
+                        Score = score.Score
+                    });
+                }
+
+                // Save changes to database
+                _context.SaveChanges();
+                //return RedirectToAction("Index");
+                return "Success";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                //return View();
+                return "Fail";
+            }
+        }
+
+        [HttpPost]
+        public async Task<String> AnalyzeText(string text)
+        {
+            String PostUrl = "http://textanalysisapi.azurewebsites.net/api/TextAnalysis";
+            client.BaseAddress = new Uri("http://textanalysisapi.azurewebsites.net");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(text), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(PostUrl, content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Success");
+                List<LiwcScoreModel> result = JsonConvert.DeserializeObject<List<LiwcScoreModel>>(await response.Content.ReadAsStringAsync());
+                String success = Create(result);
+                return success;
+            }
+            else
+            {
+                Console.WriteLine("Fail");
+                Console.WriteLine(response.StatusCode);
+                return "Fail";
+            }
         }
     }
 }

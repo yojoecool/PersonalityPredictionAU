@@ -30,7 +30,7 @@ namespace TextAnalysisAPI.Controllers
         }
 
         // POST: api/TextAnalysis
-        public JsonResult<List<CategoryScore>> Post(string text)
+        public JsonResult<List<CategoryScore>> Post([FromBody]string text)
         {
             List<CategoryScore> scores = new List<CategoryScore>();
             Dictionary dictionary = _context.Dictionaries.Find(3);

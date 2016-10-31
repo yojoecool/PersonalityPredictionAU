@@ -52,7 +52,7 @@ namespace PersonalityPredictionAU.Controllers
                     _context.CategoryScores.Add(new CategoryScore()
                     {
                         Account = user,
-                        Category = _context.Categories.FirstOrDefault(c => c.Name == score.Category),
+                        Category = _context.Categories.FirstOrDefault(c => c.Name == score.CategoryName),
                         SourceId = 1,
                         Score = score.Score
                     });

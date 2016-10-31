@@ -7,7 +7,7 @@ namespace PersonalityPredictionAU.Models
 {
     public class LiwcScoreModel
     {
-        public string Category { get; set; }
+        public string CategoryName { get; set; }
         public float Score { get; set; }
     }
 }

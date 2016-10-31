@@ -10,6 +10,7 @@
     var api_key = "57f4699a7ba60a05aad03fcf";
     var secret_key = "oJ1bk5DlRmDkzneGKvr459Zs56Z1DNrEzyrpdnlhCS0";
     var api_server = "https://app.receptiviti.com/api";
+    var connected = false;
     // This is called with the results from from FB.getLoginStatus().
     function statusChangeCallback(response) {
         console.log('statusChangeCallback');
@@ -18,10 +19,11 @@
         // app know the current login status of the person.
         // Full docs on the response object can be found in the documentation
         // for FB.getLoginStatus().
-        if (response.status === 'connected') {
+        if (response.status === 'connected' && !connected) {
             // Logged into your app and Facebook.
             getID();
             getPosts();
+            connected = true;
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
             document.getElementById('status').innerHTML = 'Please log ' +
@@ -86,122 +88,35 @@
     function getPosts() {
         console.log('Welcome!  Fetching your information.... ');
         document.getElementById('status').innerHTML = 'Welcome!  Fetching your information.... ';
-        //FB.api('/me', function(response) {
-        //  console.log('Successful login for: ' + response.name);
-        //  document.getElementById('status').innerHTML =
-        //    'Thanks for logging in, ' + response.name + '!';
-        //});
+
         FB.api('/me/posts?limit=100&offset=' + offset, function (response) {
             if (response != null && response.hasOwnProperty('data') && response.data.length > 0) {
                 responseKeep = responseKeep.concat(response.data);
-                //document.getElementById('status').innerHTML =
-                //response.data[0].message;
-                //response.data[1].message;
                 offset += 100;
                 getPosts();
             }
             else {
                 for (var i = 0; i < responseKeep.length; i++) {
                     if (responseKeep[i].hasOwnProperty('message') && responseKeep[i].message != 'undefined') {
-                        status = status.concat(responseKeep[i].message.replace('\n', ' ') + "   ");
+                        status = status.concat(responseKeep[i].message.replace('\n', ' ') + " ");
                     }
                 }
 
-                var contents = {
-                    "name": userID,
-                    "person_tags": [],
-                    "gender": 0,
-                    "content": {
-                        "content_tags": [],
-                        "content_handle": userID,
-                        "language": "english",
-                        "content_source": 0,
-                        "content_date": "2016-09-22T15:19:03.395727",
-                        "recipient_id": "",
-                        "language_content": status,
-                        "custom_fields": {}
-                    },
-                    "person_handle": userID
-                }
-
-                var request = new XMLHttpRequest();
-                request.open("POST", api_server + "/person", false);
-                request.setRequestHeader("X-API-KEY", api_key);
-                request.setRequestHeader("X-API-SECRET-KEY", secret_key);
-                request.setRequestHeader("Content-Type", "application/json");
-                request.send(JSON.stringify(contents));
-                if (request.status == 400) {
-                    var text = request.responseText;
-                    document.getElementById('status').innerHTML = JSON.parse(text).message;
-                }
-                else {
-                    var text = request.responseText;
-                    var json_ver = JSON.parse(text);
-                    var liwc = json_ver.contents[0].liwc_scores;
-
-                    $.ajax({
-                        url: api_server + "/person/" + json_ver._id,
-                        type: "DELETE",
-                        headers: {
-                            "X-API-KEY": api_key,
-                            "X-API-SECRET-KEY": secret_key,
-                        },
-                        error: function () {
-                            alert("Unable to delete person");
-                        }
-                    });
-
-                    //var scores = "";
-                    var display_scores = "";
-                    var Scores = [];
-                    for (var key in liwc) {
-                        if (key == "categories") {
-                            for (var cat in liwc[key]) {
-                                //scores = scores + cat + " : " + liwc[key][cat] + ", ";
-                                Scores.push({ Category: cat, Score: liwc[key][cat] });
-                                display_scores = display_scores + cat + " : " + liwc[key][cat] + "<br> ";
-                            }
-                        } else {
-                            //scores = scores + key + " : " + liwc[key] + ", ";
-                            Scores.push({ Category: key, Score: liwc[key] });
-                            display_scores = display_scores + key + " : " + liwc[key] + "<br> ";
-                        }
-                    }
-
-                    $.ajax({
-                        url: "/CategoryScore/Create",
-                        type: "POST",
-                        data: { Scores: Scores },
-                        success: function () {
-                            document.getElementById('status').innerHTML = '<b>***Success!  Redirecting you to view results....***</b>';
-                            var id = document.getElementById("id").innerHTML;
-                            window.location.replace("/Users/Details?id=" + id);
-                        },
-                        error: function () {
-                            alert("Error");
-                        }
-                    });
-
-                    //document.getElementById("status").innerHTML = display_scores;
-                }
-    /*
                 $.ajax({
-                    url: "/Home/userPostsTxt",
+                    url: "/Home/AnalyzeText",
                     type: "POST",
-                    data: { response: status, userID: userID },
-                    success: function (response) {
-                        document.getElementById("downloadLink").setAttribute("href", response);
+                    data: { text: status },
+                    success: function () {
+                        document.getElementById('status').innerHTML = '<b>***Success!  Redirecting you to view results....***</b>';
+                        var id = document.getElementById("id").innerHTML;
+                        window.location.replace("/Users/Details?id=" + id);
                     },
                     error: function () {
-                        alert("Error");
+                        alert("Error when saving results to database");
                     }
                 });
-                //document.getElementById('status').innerHTML =
-                //    "Finished! Click the link below to download your text file.";
-                document.getElementById('downloadLink').removeAttribute('hidden');*/
             }
         });
-        
     }
 
     function getID() {
