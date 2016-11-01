@@ -1,16 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "Pull Retrieval";
+    ViewBag.Title = "Post Retrieval";
 }
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 
 <script>
     var userID = "";
-    var api_key = "57f4699a7ba60a05aad03fcf";
-    var secret_key = "oJ1bk5DlRmDkzneGKvr459Zs56Z1DNrEzyrpdnlhCS0";
-    var api_server = "https://app.receptiviti.com/api";
-    var connected = false;
     // This is called with the results from from FB.getLoginStatus().
     function statusChangeCallback(response) {
         console.log('statusChangeCallback');
@@ -19,11 +15,10 @@
         // app know the current login status of the person.
         // Full docs on the response object can be found in the documentation
         // for FB.getLoginStatus().
-        if (response.status === 'connected' && !connected) {
+        if (response.status === 'connected') {
             // Logged into your app and Facebook.
             getID();
             getPosts();
-            connected = true;
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
             document.getElementById('status').innerHTML = 'Please log ' +
