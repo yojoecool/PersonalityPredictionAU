@@ -43,18 +43,27 @@ namespace PersonalityPredictionAU.Controllers
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Account account = db.Accounts.Find(id);
+                if (account.Email == User.Identity.Name)
+                {
+                    string json = JsonConvert.SerializeObject(account.CategoryScores.Select(cs => new { Category = cs.Category.Name, Score = cs.Score })
+                        .Where(a => a.Score <= 1.0 && a.Category != "dic" && a.Category != "sixLtr" && a.Category != "function"));
+                    if (account == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View((object)json);
+                }
+                else return RedirectToAction("UnAuthenticated", "Home");
             }
-            Account account = db.Accounts.Find(id);
-            string json = JsonConvert.SerializeObject(account.CategoryScores.Select(cs => new { Category = cs.Category.Name, Score = cs.Score })
-                .Where(a => a.Score <= 1.0 && a.Category != "dic" && a.Category != "sixLtr" && a.Category != "function"));
-            if (account == null)
-            {
-                return HttpNotFound();
-            }
-            return View((object)json);
+
+            else return RedirectToAction("UnAuthenticated", "Home");
         }
 
         // GET: Users/Create

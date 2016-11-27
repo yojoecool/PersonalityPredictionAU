@@ -16,6 +16,9 @@
     #ScoredJumbo {
         background-color: #e05e00;
     }
+    #ScoredTextJumbo {
+        background-color: #00837b;
+    }
     #WelcomeJumbo {
         cursor: initial;
     }
@@ -39,20 +42,43 @@
         $("#ProfileJumbo").click(function () {
             window.location.href = "/Users/Details?id=@ViewBag.id";
         });
+
+        $("#ScoredTextJumbo").click(function () {
+            window.location.href = "/Home/FileUpload";
+        });
+
+        $("#Privacy").click(function () {
+            window.location.href = "/Home/PrivacyPolicy";
+        });
+
+        $("#Terms").click(function () {
+            window.location.href = "/Home/Terms";
+        });
     });
 </script>
 
 <div class="w3-content w3-display-container" style="position:relative">
     <div class="jumbotron w3-display-container changeImage w3-animate-opacity" id="WelcomeJumbo">
         <h1>Welcome!</h1>
-        <p class="lead">This demo will show that we can use our own API to get category scores.</p>
+        <p id="welcomeText" class="lead">This demo will show that we can use our own API to get category scores.</p>
     </div>
     @{
         if (User.Identity.IsAuthenticated)
         {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#welcomeText").html("Use the arrows and dots below to view all of the current modules!");
+                });
+            </script>
+
             <div class="jumbotron w3-display-container changeImage w3-animate-opacity" id="ScoredJumbo">
-                <h1>Get Scored</h1>
-                <p class="lead">Click Here to get scored!</p>
+                <h1>Get Facebook Profile Scored</h1>
+                <p class="lead">Click Here to get scored with your Facebook posts!</p>
+            </div>
+
+            <div class="jumbotron w3-display-container changeImage w3-animate-opacity" id="ScoredTextJumbo">
+                <h1>Get Text File Scored</h1>
+                <p class="lead">Click Here to get scored with a text file!</p>
             </div>
 
             <div class="jumbotron w3-display-container changeImage w3-animate-opacity" id="ProfileJumbo">
@@ -66,6 +92,7 @@
                 <span class="w3-badge changePageDot w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
                 <span class="w3-badge changePageDot w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
                 <span class="w3-badge changePageDot w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+                <span class="w3-badge changePageDot w3-border w3-transparent w3-hover-white" onclick="currentDiv(4)"></span>
             </div>
         }
     }
@@ -103,13 +130,13 @@
 
 <div class="row w3-animate-bottom" style="width:100%;">
     <div class="col-md-4" style="background-color: #003358">
-        <div class="index_grid" id="AboutUs">
-            <h2>About Us</h2>
+        <div class="index_grid" id="Terms">
+            <h2>Terms and Conditions</h2>
         </div>
     </div>
     <div class="col-md-4 col-md-offset-4" style="background-color: #ff6a00">
-        <div class="index_grid" id="AboutResearch">
-            <h2>Research</h2>
+        <div class="index_grid" id="Privacy">
+            <h2>Privacy Policy</h2>
         </div>
     </div>
 </div>

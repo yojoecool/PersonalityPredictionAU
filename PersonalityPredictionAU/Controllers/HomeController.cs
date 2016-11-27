@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace PersonalityPredictionAU.Controllers
 {
@@ -50,43 +51,13 @@ namespace PersonalityPredictionAU.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 int id = _context.Accounts.FirstOrDefault(a => a.Email == User.Identity.Name).Id;
-                ViewBag.id = id; 
+                ViewBag.id = id;
                 return View();
             }
             else return RedirectToAction("UnAuthenticated");
         }
 
         public ActionResult UnAuthenticated()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public String userPostsTxt(String response, String userID)
-        {
-            //string fileName = System.IO.Path.GetTempPath() + userID + "_posts.txt";
-            string fileName = AppDomain.CurrentDomain.BaseDirectory + "Temp\\" + userID + "_posts.txt";
-            //String allPosts = new JavaScriptSerializer().Deserialize<String>(response);
-            using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(System.IO.File.Open(fileName, System.IO.FileMode.Create)))
-            {
-                file.Write(response);
-            }
-            return "/Temp/" + userID + "_posts.txt";
-        }
-
-        [HttpPost]
-        public String storeScores(String scores)
-        {
-            return scores;
-        }
-
-        public ActionResult TestSlideshow()
-        {
-            return View();
-        }
-
-        public ActionResult test()
         {
             return View();
         }
@@ -157,6 +128,70 @@ namespace PersonalityPredictionAU.Controllers
                 Console.WriteLine(response.StatusCode);
                 return "Fail";
             }
+        }
+
+        public ActionResult FileUpload()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+                return RedirectToAction("UnAuthenticated");
+        }
+
+        [HttpPost]
+        public ActionResult FileUpload(HttpPostedFileBase file)
+        {
+            string result = new System.IO.StreamReader(file.InputStream).ReadToEnd();
+
+            string x = retrieveScores(result);
+
+            if (x != null)
+            {
+                int id = _context.Accounts.FirstOrDefault(a => a.Email == User.Identity.Name).Id;
+                return RedirectToAction("Details", "Users", new { id = id });
+            }
+            else return RedirectToAction("Failed");
+        }
+
+        public ActionResult Failed()
+        {
+            return View();
+        }
+
+        private String retrieveScores(String content)
+        {
+            // Keys for accessing API
+            String url = "https://textanalysisapi.azurewebsites.net/api/textanalysis";
+
+            // Setting up the request to the API
+            // TODO Add exception handling for 400,404,etc. responses
+            WebClient request = new WebClient();
+            request.Headers.Add("Content-Type", "application/json");
+            String responseText = request.UploadString(url, JsonConvert.SerializeObject(content));
+
+            // Interpret the JSON response
+            JArray a = JArray.Parse(responseText);
+            List<LiwcScoreModel> Scores = new List<LiwcScoreModel>();
+            foreach (JObject obj in a.Children<JObject>())
+            {
+                Scores.Add(obj.ToObject<LiwcScoreModel>());
+            }
+
+            this.Create(Scores);
+
+            return responseText;
+        }
+
+        public ActionResult Terms()
+        {
+            return View();
+        }
+
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
         }
     }
 }

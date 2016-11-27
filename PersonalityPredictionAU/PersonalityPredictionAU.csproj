@@ -818,8 +818,10 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Home\TestSlideshow.cshtml" />
-    <Content Include="Views\Home\test.cshtml" />
+    <Content Include="Views\Home\FileUpload.cshtml" />
+    <Content Include="Views\Home\Failed.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\Home\PrivacyPolicy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
