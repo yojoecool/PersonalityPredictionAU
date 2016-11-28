@@ -129,6 +129,7 @@ namespace PersonalityPredictionAU.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {

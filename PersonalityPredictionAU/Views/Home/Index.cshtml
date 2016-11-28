@@ -25,6 +25,9 @@
     #ProfileJumbo {
         background-color: #069300;
     }
+    #DictionaryUploadJumbo {
+        background-color: #69005e;
+    }
     .col-md-4 {
         border-radius: 10px;
     }
@@ -53,6 +56,10 @@
 
         $("#Terms").click(function () {
             window.location.href = "/Home/Terms";
+        });
+
+        $("#DictionaryUploadJumbo").click(function () {
+            window.location.href = "/Dictionaries/Upload";
         });
     });
 </script>
@@ -85,7 +92,12 @@
                 <h1>View Profile</h1>
                 <p class="lead">Click Here to view your scores!</p>
             </div>
-            
+
+            <div class="jumbotron w3-display-container changeImage w3-animate-opacity" id="DictionaryUploadJumbo">
+                <h1>Upload Dictionary</h1>
+                <p class="lead">Click Here to upload a new dictionary!</p>
+            </div>
+
             <div class="w3-center w3-section w3-large w3-text-white w3-display-bottomleft" style="width:100%">
                 <div class="w3-left w3-padding-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
                 <div class="w3-right w3-padding-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
@@ -93,6 +105,7 @@
                 <span class="w3-badge changePageDot w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
                 <span class="w3-badge changePageDot w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
                 <span class="w3-badge changePageDot w3-border w3-transparent w3-hover-white" onclick="currentDiv(4)"></span>
+                <span class="w3-badge changePageDot w3-border w3-transparent w3-hover-white" onclick="currentDiv(5)"></span>
             </div>
         }
     }
